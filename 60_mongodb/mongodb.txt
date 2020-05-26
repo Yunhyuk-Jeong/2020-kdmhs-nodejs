@@ -1,0 +1,10 @@
+1. 데이터베이스
+1) 관계형 데이터베이스(RDB) : MySQL, PostgreSQL, Oracle, MSSQL, DB2
+- 테이블 스키마 (행과 열, 엑셀)
+- SQL을 통해서 CRUD 처리를 함
+- DML, DDL, DCL
+
+2) NoSQL (non SQL, Not Only SQL) MongoDB
+- NoSQL : 빅데이터 -> 단순 검색, 저장
+- 실시간으로 처리해야 하는 경우, 대용량 처리하는 경우
+- 다양한 형태의 데이터를 넣을 수 있음
