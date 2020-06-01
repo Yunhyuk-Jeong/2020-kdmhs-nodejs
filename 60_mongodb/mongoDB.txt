@@ -15,18 +15,27 @@
 - (Client) mongo
 
 4. MongoDB Shell Command
-1) Database
-- db
-- use "db명"
-- show dbs
+    1) Database
+    - db
+    - use "db명"
+    - show dbs
 
-2) Collection
-- db.createCollection("컬렉션명")
-- show collections
-- db.컬렉션명.drop()
+    2) Collection
+    - db.createCollection("컬렉션명")
+    - show collections
+    - db.컬렉션명.drop()
 
-3) Document
-- db.컬렉션명.insert({..})
-- db.컬렉션명.find().pretty()
-- db.컬렉션명.find({조회조건}).limit(건수)
-- db.컬렉션명.find({}, {_id:0, singer:1, ...})
+    3) Document
+    - db.컬렉션명.insert({..})
+    - db.컬렉션명.find().pretty()
+    - db.컬렉션명.find({조회조건}).limit(건수)
+    - db.컬렉션명.find({}, {_id: 0, singer: 1, ...})
+    - db.컬렉션명.update({조회조건}, {수정내용})
+    - db.컬렉션명.update({조회조건}, {$set: {필드: 값}})
+    - db.컬렉션명.remove({})
+    - db.컬렉션명.remove({삭제조건})
+    - db.dropDatabase()
+
+5. MongoDB GUI Client : Compass 사용
+
+6. ODM (Object Document Mapping) 도구 : Mongoose
