@@ -25,10 +25,6 @@ const list = (req, res) => {
 const detail = (req, res) => {
   const id = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).end();
-  }
-
   MusicModel.findById(id, (err, result) => {
     if (err) return res.status(500).end();
     if (!result) return res.status(404).end();
@@ -62,31 +58,41 @@ const create = (req, res) => {
 // - 실패 : id가 숫자가 아닐 경우 400 응답 (400: Bad Request)
 //          해당하는 id가 없는 경우 404 응답 (404: Not Found)
 const update = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  if (Number.isNaN(id)) return res.status(400).end();
-
-  const result = music.find((m) => m.id === id);
-  if (!result) return res.status(404).end();
-
+  const id = req.params.id;
   const { singer, title } = req.body;
-  if (singer) result.singer = singer;
-  if (title) result.title = title;
-  res.json(result);
+
+  MusicModel.findByIdAndUpdate(
+    id,
+    { singer, title },
+    { new: true },
+    (err, result) => {
+      if (err) return res.status(500).end();
+      if (!result) return res.status(404).end();
+      res.json(result);
+    }
+  );
 };
 
 // 삭제 (localhost:3000/api/music/{id})
 // - 성공 : id에 해당하는 music 객체 삭제 후 결과 배열 리턴 (200)
 // - 실패 : id가 숫자가 아닌 경우 404 응답 (404: Not Found)
 const remove = (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const id = req.params.id;
+  const { singer, title } = req.body;
 
-  if (Number.isNaN(id)) return res.status(400).end();
-
-  const result = music.find((m) => m.id === id);
-  if (!result) return res.status(404).end();
-
-  music = music.filter((m) => m.id !== id);
-  res.json(music);
+  MusicModel.findByIdAndDelete(id, (err, result) => {
+    if (err) return res.status(500).end();
+    if (!result) return res.status(404).end();
+    res.json(result);
+  });
 };
 
-module.exports = { list, detail, create, update, remove };
+const checkID = (req, res, next) => {
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).end();
+  }
+  next();
+};
+
+module.exports = { list, detail, create, update, remove, checkID };
