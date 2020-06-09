@@ -1,71 +1,77 @@
-// 데이터
-let nextId = 4;
-let movie = [
-  { id: 1, title: "스타워즈", director: "조지 루카스", year: "1977" },
-  { id: 2, title: "아바타", director: "제임스 카메론", year: "2009" },
-  { id: 3, title: "인터스텔라", director: "크리스토퍼 놀란", year: "2013" },
-];
+const MovieModel = require("../../models/movie");
+const mongoose = require("mongoose");
 
 // 목록조회
 const list = (req, res) => {
-  let limit = req.query.limit || 10;
-  limit = parseInt(limit, 10);
+  let limit = req.query.limit || 10; // string
+  limit = parseInt(limit, 10); // number
 
   if (Number.isNaN(limit)) {
     return res.status(400).end();
   }
 
-  res.json(movie.slice(0, limit));
+  MovieModel.find((err, result) => {
+    if (err) return res.status(500).end();
+    res.json(result);
+  }).limit(limit);
 };
 
 // 상세조회
 const detail = (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const id = req.params.id;
 
-  if (Number.isNaN(id)) {
-    return res.status(400).end();
-  }
-
-  const result = movie.filter((m) => m.id === id);
-  if (!result) return res.status(404).end();
-  res.json(result);
+  MovieModel.findById(id, (err, result) => {
+    if (err) return res.status(500).end();
+    if (!result) return res.status(404).end();
+    res.json(result);
+  });
 };
 
 // 등록
 const create = (req, res) => {
   const { title, director, year } = req.body;
   if (!title || !director || !year) return res.status(400).end();
-  const m = { id: nextId++, title, director, year };
-  movie.push(m);
-  res.status(201).json(movie);
+  MovieModel.create({ title, director, year }, (err, result) => {
+    if (err) return res.status(500).end();
+    res.status(201).json(result);
+  });
 };
 
 // 수정
 const update = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  if (Number.isNaN(id)) return res.status(400).end();
-
-  const result = movie.find((m) => m.id === id);
-  if (!result) return res.status(404).end();
-
+  const id = req.params.id;
   const { title, director, year } = req.body;
-  if (title) result.title = title;
-  if (director) result.director = director;
-  if (year) result.year = year;
-  res.json(result);
+
+  MovieModel.findByIdAndUpdate(
+    id,
+    { title, director, year },
+    { new: true },
+    (err, result) => {
+      if (err) return res.status(500).end();
+      if (!result) return res.status(404).end();
+      res.json(result);
+    }
+  );
 };
 
 // 삭제
 const remove = (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const id = req.params.id;
+  const { title, director, year } = req.body;
 
-  if (Number.isNaN(id)) return res.status(400).end();
-
-  const result = movie.find((m) => m.id === id);
-  if (!result) return res.status(404).end();
-
-  movie = movie.filter((m) => m.id !== id);
-  res.json(movie);
+  MovieModel.findByIdAndDelete(id, (err, result) => {
+    if (err) return res.status(500).end();
+    if (!result) return res.status(404).end();
+    res.json(result);
+  });
 };
 
-module.exports = { list, detail, create, update, remove };
+const checkID = (req, res, next) => {
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).end();
+  }
+  next();
+};
+
+module.exports = { list, detail, create, update, remove, checkID };
