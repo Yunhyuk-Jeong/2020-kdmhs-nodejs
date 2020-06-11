@@ -17,4 +17,6 @@ router.put("/:id", ctrl.checkID, ctrl.update);
 // 삭제 (앞에는 http 메소드 명이라 delete이고, 뒤에는 remove)
 router.delete("/:id", ctrl.checkID, ctrl.remove);
 
+router.get("/new", ctrl.showCreatePage); // 등록페이지 보여주기
+
 module.exports = router;

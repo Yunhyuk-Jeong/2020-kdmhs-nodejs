@@ -1,107 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>It's My App!!</title>
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-    />
-    <!-- Google Fonts -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    />
-    <!-- Bootstrap core CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Material Design Bootstrap -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css"
-      rel="stylesheet"
-    />
-  </head>
+  <%- include ./header %>
   <body>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
-      <!-- Navbar brand -->
-      <a class="navbar-brand" href="#">Navbar</a>
-
-      <!-- Collapse button -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#basicExampleNav"
-        aria-controls="basicExampleNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="basicExampleNav">
-        <!-- Links -->
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-
-          <!-- Dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              id="navbarDropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              >Dropdown</a
-            >
-            <div
-              class="dropdown-menu dropdown-primary"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        </ul>
-        <!-- Links -->
-
-        <form class="form-inline">
-          <div class="md-form my-0">
-            <input
-              class="form-control mr-sm-2"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </div>
-        </form>
-      </div>
-      <!-- Collapsible content -->
-    </nav>
-    <!--/.Navbar-->
-
+    <%- include ./menu %>
     <div
       class="jumbotron card card-image"
       style="
@@ -111,11 +12,15 @@
       <div class="text-white text-center py-5 px-4">
         <div>
           <h2 class="card-title h1-responsive pt-3 mb-5 font-bold">
-            <strong>쏜애플과 함께하는 즐거운 시간</strong>
+            <strong>쏜애플과 함께하는 물의 기억 콘서트</strong>
           </h2>
           <p class="mx-5 mb-5">
-            미안하다 이거 보여주려고 어그로 끌었다. 진짜 그 찐따같던 쏜애플이
-            맞냐? 진짜 쏜애플은 전설이다.
+            미안하다 이거 보여주려고 어그로끌었다.. 쏜애플 노래수준 ㄹㅇ실화냐?
+            진짜 세계관최강자들의 노래다.. 그찐따같던 쏜애플이 맞나? 진짜
+            쏜애플은 전설이다..진짜옛날에 맨날쏜애플봘는데 왕같은존재인 윤성현
+            되서 세계최강 전설적인 영웅이된윤성현보면 진짜내가다 감격스럽고
+            쏜애플 노래부터 명장면까지 가슴울리는장면들이 뇌리에 스치면서 가슴이
+            웅장해진다..
           </p>
           <a class="btn btn-outline-white btn-md"
             ><i class="fas fa-clone left"></i> View project</a
@@ -123,26 +28,6 @@
         </div>
       </div>
     </div>
-
-    <!-- JQuery -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-    ></script>
-    <!-- Bootstrap tooltips -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"
-    ></script>
-    <!-- Bootstrap core JavaScript -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"
-    ></script>
-    <!-- MDB core JavaScript -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"
-    ></script>
+    <%- include ./footer %>
   </body>
 </html>

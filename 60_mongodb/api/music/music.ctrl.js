@@ -14,7 +14,8 @@ const list = (req, res) => {
 
   MusicModel.find((err, result) => {
     if (err) return res.status(500).end();
-    res.json(result);
+    //res.json(result);
+    res.render("music/list", { result });
   }).limit(limit);
 };
 
@@ -28,7 +29,8 @@ const detail = (req, res) => {
   MusicModel.findById(id, (err, result) => {
     if (err) return res.status(500).end();
     if (!result) return res.status(404).end();
-    res.json(result);
+    //res.json(result);
+    res.render("music/detail", { result });
   });
 };
 
@@ -95,4 +97,16 @@ const checkID = (req, res, next) => {
   next();
 };
 
-module.exports = { list, detail, create, update, remove, checkID };
+const showCreatePage = (req, res) => {
+  res.render("music/create");
+};
+
+module.exports = {
+  list,
+  detail,
+  create,
+  update,
+  remove,
+  checkID,
+  showCreatePage,
+};
