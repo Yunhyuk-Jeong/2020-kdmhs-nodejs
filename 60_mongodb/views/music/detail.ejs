@@ -37,7 +37,18 @@
       />
       <label for="inputLGEx">ID</label>
     </div>
-
+    <button onclick="location.href='/api/music'" class="btn btn-blue btn-md">
+      목록
+    </button>
+    <button
+      onclick="location.href='/api/music/<%= result._id %>/edit'"
+      class="btn btn-blue btn-md"
+    >
+      수정
+    </button>
+    <button class="btn btn-blue btn-md">
+      삭제
+    </button>
     <%- include ../footer %>
   </body>
 </html>

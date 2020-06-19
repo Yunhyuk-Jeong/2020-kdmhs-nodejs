@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include ../header %>
+  <%- include("../header"); %>
+
   <body>
-    <%- include ../menu %>
+    <%- include("../menu"); %>
 
-    <!-- input -->
-    <div class="md-form">
-      <input type="text" id="singer" class="form-control" required />
-      <label for="inputLGEx">SINGER</label>
-    </div>
+    <form id="createForm">
+      <!-- Material input -->
+      <div class="md-form">
+        <input type="text" id="singer" class="form-control" required />
+        <label for="singer">Input Singer</label>
+      </div>
 
-    <%- include ../footer %>
+      <div class="md-form">
+        <input type="text" id="title" class="form-control" required />
+        <label for="title">Input Title</label>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        onclick="location.href='/api/music/new'"
+      >
+        저장
+      </button>
+    </form>
+
+    <%- include("../footer"); %>
+
+    <script>
+      $(function () {
+        $("#createForm").submit((event) => {
+          event.preventDefault();
+          // 등록
+          const singer = $("#singer").val();
+          const title = $("#title").val();
+
+          $.ajax({
+            url: "/api/music",
+            type: "post",
+            data: { singer, title },
+          })
+            .done(() => {
+              location.href = "/api/music";
+              console.log("정상");
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        });
+      });
+    </script>
   </body>
 </html>

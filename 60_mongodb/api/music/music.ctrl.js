@@ -68,8 +68,8 @@ const update = (req, res) => {
     { singer, title },
     { new: true },
     (err, result) => {
-      if (err) return res.status(500).end();
-      if (!result) return res.status(404).end();
+      if (err) return res.status(500).send("수정 시 오류가 발생했습니다.");
+      if (!result) return res.status(404).send("해당하는 정보가 없습니다.");
       res.json(result);
     }
   );
@@ -101,6 +101,16 @@ const showCreatePage = (req, res) => {
   res.render("music/create");
 };
 
+const showUpdatePage = (req, res) => {
+  const id = req.params.id;
+
+  MusicModel.findById(id, (err, result) => {
+    if (err) return res.status(500).send("조회시 오류가 발생했습니다.");
+    if (!result) return res.status(404).send("해당하는 정보가 없습니다.");
+    res.render("music/update", { result });
+  });
+};
+
 module.exports = {
   list,
   detail,
@@ -109,4 +119,5 @@ module.exports = {
   remove,
   checkID,
   showCreatePage,
+  showUpdatePage,
 };
