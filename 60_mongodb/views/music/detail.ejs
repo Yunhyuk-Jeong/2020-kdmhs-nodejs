@@ -46,9 +46,30 @@
     >
       수정
     </button>
-    <button class="btn btn-blue btn-md">
+    <button id="deleteBtn" class="btn btn-blue btn-md">
       삭제
     </button>
     <%- include ../footer %>
+
+    <script>
+      $(function () {
+        $("#deleteBtn").on("click", () => {
+          const result = confirm("정말로 삭제하시겠습니까?");
+          if (result) {
+            $.ajax({
+              url: "/api/music/<%= result._id %>",
+              type: "DELETE",
+            })
+              .done(() => {
+                location.href = "/api/music/";
+                console.log("삭제 처리");
+              })
+              .fail((request, status, error) => {
+                alert(request.responseText);
+              });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

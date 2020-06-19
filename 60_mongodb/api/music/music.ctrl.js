@@ -83,8 +83,8 @@ const remove = (req, res) => {
   const { singer, title } = req.body;
 
   MusicModel.findByIdAndDelete(id, (err, result) => {
-    if (err) return res.status(500).end();
-    if (!result) return res.status(404).end();
+    if (err) return res.status(500).send("삭제 시 오류가 발생했습니다.");
+    if (!result) return res.status(404).send("해당하는 정보가 없습니다.");
     res.json(result);
   });
 };

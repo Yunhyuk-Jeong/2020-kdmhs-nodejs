@@ -37,12 +37,11 @@
 
           $.ajax({
             url: "/api/music",
-            type: "post",
+            type: "POST",
             data: { singer, title },
           })
             .done(() => {
               location.href = "/api/music";
-              console.log("정상");
             })
             .fail((request, status, error) => {
               alert(request.responseText);
