@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ../header %>
+  <body>
+    <%- include ../menu %>
+
+    <!-- input -->
+    <div class="md-form">
+      <input
+        type="text"
+        id="title"
+        class="form-control"
+        value="<%= result.title %>"
+        readonly
+      />
+      <label for="inputLGEx">TITLE</label>
+    </div>
+
+    <div class="md-form">
+      <input
+        type="text"
+        id="director"
+        class="form-control"
+        value="<%= result.director %>"
+        readonly
+      />
+      <label for="inputLGEx">DIRECTOR</label>
+    </div>
+
+    <div class="md-form">
+      <input
+        type="text"
+        id="year"
+        class="form-control"
+        value="<%= result.year %>"
+        readonly
+      />
+      <label for="inputLGEx">YEAR</label>
+    </div>
+
+    <div class="md-form">
+      <input
+        type="text"
+        id="_id"
+        class="form-control"
+        value="<%= result._id %>"
+        readonly
+      />
+      <label for="inputLGEx">ID</label>
+    </div>
+    <button onclick="location.href='/api/movie'" class="btn btn-blue btn-md">
+      목록
+    </button>
+    <button
+      onclick="location.href='/api/movie/<%= result._id %>/edit'"
+      class="btn btn-blue btn-md"
+    >
+      수정
+    </button>
+    <button id="deleteBtn" class="btn btn-blue btn-md">
+      삭제
+    </button>
+    <%- include ../footer %>
+
+    <script>
+      $(function () {
+        $("#deleteBtn").on("click", () => {
+          const result = confirm("정말로 삭제하시겠습니까?");
+          if (result) {
+            $.ajax({
+              url: "/api/movie/<%= result._id %>",
+              type: "DELETE",
+            })
+              .done(() => {
+                location.href = "/api/movie/";
+                console.log("삭제 처리");
+              })
+              .fail((request, status, error) => {
+                alert(request.responseText);
+              });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

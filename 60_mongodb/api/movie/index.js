@@ -5,16 +5,20 @@ const ctrl = require("./movie.ctrl");
 // 목록 조회
 router.get("/", ctrl.list);
 
+router.get("/new", ctrl.showCreatePage); // 등록페이지 보여주기
+
 // 상세 조회
-router.get("/:id", ctrl.detail);
+router.get("/:id", ctrl.checkID, ctrl.detail);
 
 // 등록
 router.post("/", ctrl.create);
 
 // 수정
-router.put("/:id", ctrl.update);
+router.put("/:id", ctrl.checkID, ctrl.update);
+
+router.get("/:id/edit", ctrl.checkID, ctrl.showUpdatePage);
 
 // 삭제 (앞에는 http 메소드 명이라 delete이고, 뒤에는 remove)
-router.delete("/:id", ctrl.remove);
+router.delete("/:id", ctrl.checkID, ctrl.remove);
 
 module.exports = router;

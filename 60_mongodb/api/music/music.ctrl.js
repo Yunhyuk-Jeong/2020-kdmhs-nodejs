@@ -16,7 +16,9 @@ const list = (req, res) => {
     if (err) return res.status(500).end();
     //res.json(result);
     res.render("music/list", { result });
-  }).limit(limit);
+  })
+    .limit(limit)
+    .sort({ _id: -1 });
 };
 
 // 상세조회 (localhost:3000/api/music/:id)
