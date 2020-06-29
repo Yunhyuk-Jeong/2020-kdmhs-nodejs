@@ -4,11 +4,7 @@
   <body>
     <%- include ../menu %>
 
-    <button
-      type="button"
-      class="btn btn-outline-info waves-effect"
-      onclick="location.href='/api/music/new'"
-    >
+    <button type="button" class="btn btn-outline-info waves-effect" onclick="location.href='/api/music/new'">
       등록
     </button>
 
@@ -19,11 +15,7 @@
         <div class="card">
           <!--Card image-->
           <div class="view overlay">
-            <img
-              class="card-img-top"
-              src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
-              alt="Card image cap"
-            />
+            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap" />
             <a href="#!">
               <div class="mask rgba-white-slight"></div>
             </a>
@@ -36,11 +28,7 @@
             <!--Text-->
             <p class="card-text"><%= music.singer %></p>
             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-            <button
-              type="button"
-              class="btn btn-blue btn-md"
-              onclick="location.href='/api/music/<%= music._id %>'"
-            >
+            <button type="button" class="btn btn-blue btn-md" onclick="location.href='/api/music/<%= music._id %>'">
               Read more
             </button>
           </div>

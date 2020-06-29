@@ -20,12 +20,12 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: Number,
-    default: 0, // 0:일반 사용자 1:관리자
+    default: 0, //* 0:일반 사용자 1:관리자
   },
   token: {
     type: String,
   },
 });
 
-// 모델명s -> 컬렉션이 만들어짐
-module.exports = mongoose.model("user", UserSchema, "users"); // <- 직접 컬렉션명 지정도 가능
+//* 모델명s -> 컬렉션이 만들어짐
+module.exports = mongoose.model("user", UserSchema, "users"); //* <- 직접 컬렉션명 지정도 가능

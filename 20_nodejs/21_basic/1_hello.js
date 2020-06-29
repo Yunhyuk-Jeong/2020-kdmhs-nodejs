@@ -39,7 +39,7 @@ fs.readFile("./1-1_hello.txt", (encoding = "utf-8"), function (err, data) {
 */
 
 var EventEmitter = require("events").EventEmitter;
-var evt = new EventEmitter(); // 이벤트 객체 생성
+var evt = new EventEmitter(); //* 이벤트 객체 생성
 
 evt.on("helloNode", function (str) {
   console.log(str);
@@ -47,4 +47,4 @@ evt.on("helloNode", function (str) {
 
 setTimeout(function () {
   evt.emit("helloNode", "Hello, Node.js");
-}, 3000); // 3초 있다가 이벤트 발생
+}, 3000); //* 3초 있다가 이벤트 발생

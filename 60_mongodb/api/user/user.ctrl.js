@@ -1,24 +1,73 @@
 const UserModel = require("../../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const showSignupPage = (req, res) => {
   res.render("user/signup");
 };
 
-// 회원가입
-// - 성공 : (201 : Created) 응답, 생성된 Useer 객체 반환
-// - 오류 : 필수입력값 누락 (400 : Bad Request)
-//          이메일이 중복될 경우 (409 : conflict)
+const showLoginPage = (req, res) => {
+  res.render("user/login");
+};
+
+//* 회원가입
+//* - 성공 : (201 : Created) 응답, 생성된 Useer 객체 반환
+//* - 오류 : 필수입력값 누락 (400 : Bad Request)
+//*          이메일이 중복될 경우 (409 : conflict)
 
 const signup = (req, res) => {
   const { name, email, password } = req.body;
-  if (!name || !email || !password)
-    return res.status(400).send("필수값이 입력되지 않았습니다.");
+  if (!name || !email || !password) return res.status(400).send("필수값이 입력되지 않았습니다.");
 
-  UserModel.findOne({ email }),
-    (err, result) => {
-      if (err) return res.status(500).send("회원가입 시 오류가 발생했습니다.");
-      if (result) return res.status(409).send("이미 사용중인 이메일입니다.");
-    };
+  UserModel.findOne({ email }, (err, result) => {
+    if (err) return res.status(500).send("회원가입 시 오류가 발생했습니다.");
+    if (result) return res.status(409).send("이미 사용중인 이메일입니다.");
+
+    //* 회원가입
+    //* bcrypt : 단방향 해시 함수
+    const saltRounds = 10; //* salt 자릿수
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      if (err) return res.status(500).send("암호화 시 오류가 발생했습니다.");
+
+      const user = new UserModel({ name, email, password: hash });
+      user.save((err, result) => {
+        if (err) return res.status(500).send("회원가입 시 오류가 발생했습니다.");
+        res.status(201).json(result);
+      });
+    });
+  });
 };
 
-module.exports = { showSignupPage };
+//* 로그인
+//* - 성공 : email, password가 일치하면 성공(200)
+//* - 실패 : 필수입력값이 미입력된 경우 (400: Bad Request)
+//*          가입되지 않은 email일 경우 (404: Not Found)
+//*          password가 일치하지 않는 경우 (500)
+
+const login = (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) return res.status(400).send("필수값이 입력되지 않았습니다.");
+
+  UserModel.findOne({ email }, (err, user) => {
+    if (err) return res.status(500).send("사용자 조회 시 오류가 발생했습니다.");
+    if (!user) return res.status(404).send("가입되지 않은 계정입니다.");
+
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) return res.status(500).send("로그인 시 오류가 발생했습니다.");
+      if (!isMatch) return res.status(500).send("비밀번호가 올바르지 않습니다.");
+
+      //* 비밀번호 검증 성공 => signed 토큰 생성 발급 (jsonwebtoken)
+      const token = jwt.sign(user._id.toHexString(), "secretKey");
+
+      UserModel.findByIdAndUpdate(user._id, { token }, (err, result) => {
+        if (err) return res.status(500).send("로그인 시 오류가 발생했습니다.");
+        //* 토큰 저장 : cookie, localStorage ...
+        res.cookie("token", token, { httpOnly: true });
+        res.json(result);
+      });
+    });
+  });
+};
+
+module.exports = { showSignupPage, showLoginPage, signup, login };

@@ -8,23 +8,13 @@
     <!-- Material form register -->
     <div class="card">
       <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Sign up</strong>
+        <strong>Login</strong>
       </h5>
 
       <!--Card content-->
       <div class="card-body px-lg-5 pt-0">
         <!-- Form -->
-        <form id="signupForm" class="text-center" style="color: #757575;" action="#!">
-          <div class="form-row">
-            <div class="col">
-              <!-- First name -->
-              <div class="md-form">
-                <input type="text" id="name" class="form-control" required />
-                <label for="name">Input Name</label>
-              </div>
-            </div>
-          </div>
-
+        <form id="loginForm" class="text-center" style="color: #757575;" action="#!">
           <!-- E-mail -->
           <div class="md-form mt-0">
             <input type="email" id="email" class="form-control" required />
@@ -37,15 +27,15 @@
             <label for="password">Input Password</label>
           </div>
 
-          <!-- Sign up button -->
+          <!-- Login button -->
           <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
-            Sign up
+            Login
           </button>
           <hr />
 
           <!-- Terms of service -->
           <p>
-            By clicking <em>Sign up</em> you agree to our
+            By clicking <em>Login</em> you agree to our
             <a href="" target="_blank">terms of service</a>
           </p>
         </form>
@@ -59,20 +49,19 @@
 
     <script>
       $(function () {
-        $("#signupForm").submit((event) => {
+        $("#loginForm").submit((event) => {
           event.preventDefault();
           //* 등록
-          const name = $("#name").val();
           const email = $("#email").val();
           const password = $("#password").val();
 
           $.ajax({
-            url: "/api/user/signup",
+            url: "/api/user/login",
             type: "POST",
-            data: { name, email, password },
+            data: { email, password },
           })
             .done(() => {
-              location.href = "/api/user/login";
+              location.href = "/";
             })
             .fail((request, status, error) => {
               alert(request.responseText);

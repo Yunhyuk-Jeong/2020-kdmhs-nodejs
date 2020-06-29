@@ -1,4 +1,4 @@
-// 2-3_module2.js
+//* 2-3_module2.js
 
 /*
 var myCalc = {

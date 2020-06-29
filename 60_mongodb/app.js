@@ -20,7 +20,7 @@ db.once("open", function () {
   console.log("Database Connected.");
 });
 
-// view engine setup
+//* view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -34,21 +34,21 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// 라우팅 모듈 설정
-app.use("/api", require("./api")); // api/index
+//* 라우팅 모듈 설정
+app.use("/api", require("./api")); //* api/index
 
-// catch 404 and forward to error handler
+//* catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
+//* error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+  //* set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
+  //* render the error page
   res.status(err.status || 500);
   res.render("error");
 });

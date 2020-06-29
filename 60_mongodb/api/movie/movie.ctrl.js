@@ -1,10 +1,10 @@
 const MovieModel = require("../../models/movie");
 const mongoose = require("mongoose");
 
-// 목록조회
+//* 목록조회
 const list = (req, res) => {
-  let limit = req.query.limit || 10; // string
-  limit = parseInt(limit, 10); // number
+  let limit = req.query.limit || 10; //* string
+  limit = parseInt(limit, 10); //* number
 
   if (Number.isNaN(limit)) {
     return res.status(400).end();
@@ -19,7 +19,7 @@ const list = (req, res) => {
     .sort({ _id: -1 });
 };
 
-// 상세조회
+//* 상세조회
 const detail = (req, res) => {
   const id = req.params.id;
 
@@ -31,7 +31,7 @@ const detail = (req, res) => {
   });
 };
 
-// 등록
+//* 등록
 const create = (req, res) => {
   const { title, director, year } = req.body;
   if (!title || !director || !year) return res.status(400).end();
@@ -42,24 +42,19 @@ const create = (req, res) => {
   });
 };
 
-// 수정
+//* 수정
 const update = (req, res) => {
   const id = req.params.id;
   const { title, director, year } = req.body;
 
-  MovieModel.findByIdAndUpdate(
-    id,
-    { title, director, year },
-    { new: true },
-    (err, result) => {
-      if (err) return res.status(500).send("수정 시 오류가 발생했습니다.");
-      if (!result) return res.status(404).send("해당하는 정보가 없습니다.");
-      res.json(result);
-    }
-  );
+  MovieModel.findByIdAndUpdate(id, { title, director, year }, { new: true }, (err, result) => {
+    if (err) return res.status(500).send("수정 시 오류가 발생했습니다.");
+    if (!result) return res.status(404).send("해당하는 정보가 없습니다.");
+    res.json(result);
+  });
 };
 
-// 삭제
+//* 삭제
 const remove = (req, res) => {
   const id = req.params.id;
   const { title, director, year } = req.body;

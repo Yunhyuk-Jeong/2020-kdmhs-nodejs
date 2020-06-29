@@ -1,4 +1,4 @@
-// 2-1_module.js
+//* 2-1_module.js
 
 /*
 exports.add = function (a, b) {

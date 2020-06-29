@@ -6,55 +6,28 @@
 
     <!-- input -->
     <div class="md-form">
-      <input
-        type="text"
-        id="title"
-        class="form-control"
-        value="<%= result.title %>"
-        readonly
-      />
+      <input type="text" id="title" class="form-control" value="<%= result.title %>" readonly />
       <label for="inputLGEx">TITLE</label>
     </div>
 
     <div class="md-form">
-      <input
-        type="text"
-        id="director"
-        class="form-control"
-        value="<%= result.director %>"
-        readonly
-      />
+      <input type="text" id="director" class="form-control" value="<%= result.director %>" readonly />
       <label for="inputLGEx">DIRECTOR</label>
     </div>
 
     <div class="md-form">
-      <input
-        type="text"
-        id="year"
-        class="form-control"
-        value="<%= result.year %>"
-        readonly
-      />
+      <input type="text" id="year" class="form-control" value="<%= result.year %>" readonly />
       <label for="inputLGEx">YEAR</label>
     </div>
 
     <div class="md-form">
-      <input
-        type="text"
-        id="_id"
-        class="form-control"
-        value="<%= result._id %>"
-        readonly
-      />
+      <input type="text" id="_id" class="form-control" value="<%= result._id %>" readonly />
       <label for="inputLGEx">ID</label>
     </div>
     <button onclick="location.href='/api/movie'" class="btn btn-blue btn-md">
       목록
     </button>
-    <button
-      onclick="location.href='/api/movie/<%= result._id %>/edit'"
-      class="btn btn-blue btn-md"
-    >
+    <button onclick="location.href='/api/movie/<%= result._id %>/edit'" class="btn btn-blue btn-md">
       수정
     </button>
     <button id="deleteBtn" class="btn btn-blue btn-md">
