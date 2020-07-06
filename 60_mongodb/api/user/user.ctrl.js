@@ -1,6 +1,7 @@
 const UserModel = require("../../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { render } = require("../../app");
 
 const showSignupPage = (req, res) => {
   res.render("user/signup");
@@ -70,4 +71,52 @@ const login = (req, res) => {
   });
 };
 
-module.exports = { showSignupPage, showLoginPage, signup, login };
+//* 인증처리
+const checkAuth = (req, res, next) => {
+  //* 모든 화면에서 공통으로 필요하는 데이터가 있을 경우 locals로 세팅 가능
+  res.locals.user = null;
+
+  //* 쿠키로부터 토큰을 가져옴
+  const token = req.cookies.token;
+
+  if (!token) {
+    //* 정상적인 경우
+    if (req.url === "/" || req.url === "/api/user/signup" || req.url === "/api/user/login") return next();
+    //* 토큰이 없는 경우
+    else return res.render("user/login");
+  }
+
+  //* 토큰 검증
+  jwt.verify(token, "secretKey", (err, _id) => {
+    if (err) {
+      res.clearCookie("token");
+      return res.render("user/login");
+    }
+
+    UserModel.findOne({ _id, token }, (err, user) => {
+      if (err) return res.status(500).send("인증 시 오류가 발생했습니다.");
+      if (!user) return res.render("user/login;");
+      res.locals.user = { name: user.name, role: user.role };
+      next();
+    });
+  });
+};
+
+const logout = (req, res) => {
+  //* 쿠키에서 토큰을 가져옴
+  const token = req.cookies.token;
+
+  if (!token) return res.render("user/login");
+
+  jwt.verify(token, "secretKey", (err, _id) => {
+    if (err) return res.status(500).send("로그아웃 시 오류가 발생했습니다.");
+
+    UserModel.findByIdAndUpdate(_id, { token: "" }, (err, result) => {
+      if (err) return res.status(500).send("로그아웃 시 오류가 발생했습니다.");
+      res.clearCookie("token");
+      res.redirect("/");
+    });
+  });
+};
+
+module.exports = { showSignupPage, showLoginPage, signup, login, checkAuth, logout };
